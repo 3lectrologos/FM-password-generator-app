@@ -17,16 +17,14 @@ export default function LengthSlider({ className }: { className?: string }) {
       )}
     >
       <div className={`flex flex-row justify-between items-center`}>
-        <label
-          htmlFor="length"
-          className={twMerge(`textStyle-body text-lavenderGray`)}
-        >
+        <label className={twMerge(`textStyle-body text-lavenderGray`)}>
           Character Length
         </label>
         <span className={`textStyle-heading-lg text-mintGreen`}>{length}</span>
       </div>
       <Slider
         className={`w-full cursor-pointer`}
+        name={'Password Length'}
         min={5}
         max={15}
         value={[length]}
@@ -39,21 +37,23 @@ export default function LengthSlider({ className }: { className?: string }) {
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <SliderPrimitive.Root
-    ref={ref}
-    className={twMerge(
-      'relative flex w-full touch-none select-none items-center group',
-      className
-    )}
-    {...props}
-  >
-    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden bg-deepSpace">
-      <SliderPrimitive.Range className="absolute h-full bg-mintGreen" />
-    </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-[28px] w-[28px] rounded-full border-2 bg-lavenderGray transition-colors focus-visible:outline-none focus-visible:border-mintGreen focus-visible:bg-deepSpace focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal focus-visible:ring-mintGreen/35 group-hover:bg-deepSpace group-hover:border-2 group-hover:border-mintGreen disabled:pointer-events-none disabled:opacity-50" />
-  </SliderPrimitive.Root>
-))
+>(({ className, ...props }, ref) => {
+  return (
+    <SliderPrimitive.Root
+      ref={ref}
+      className={twMerge(
+        'relative flex w-full touch-none select-none items-center group',
+        className
+      )}
+      {...props}
+    >
+      <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden bg-deepSpace">
+        <SliderPrimitive.Range className="absolute h-full bg-mintGreen" />
+      </SliderPrimitive.Track>
+      <SliderPrimitive.Thumb className="block h-[28px] w-[28px] rounded-full border-2 bg-lavenderGray transition-colors focus-visible:outline-none focus-visible:border-mintGreen focus-visible:bg-deepSpace focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal focus-visible:ring-mintGreen/35 group-hover:bg-deepSpace group-hover:border-2 group-hover:border-mintGreen disabled:pointer-events-none disabled:opacity-50" />
+    </SliderPrimitive.Root>
+  )
+})
 Slider.displayName = SliderPrimitive.Root.displayName
 
 export { Slider }

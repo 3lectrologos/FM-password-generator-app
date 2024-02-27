@@ -30,14 +30,17 @@ function CheckboxWithLabel({
   className?: string
 }) {
   return (
-    <label
+    <div
       className={twMerge(`flex items-center gap-x-5 tablet:gap-x-6`, className)}
     >
-      <Checkbox />
-      <span className={`textStyle-body leading-none text-lavenderGray`}>
+      <Checkbox id={label} name={label} />
+      <label
+        className={`textStyle-body leading-none text-lavenderGray`}
+        htmlFor={label}
+      >
         {label}
-      </span>
-    </label>
+      </label>
+    </div>
   )
 }
 
