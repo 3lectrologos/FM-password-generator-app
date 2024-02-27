@@ -18,8 +18,7 @@ const config: Config = {
       mustardYellow: '#F8CD65',
     },
     screens: {
-      tablet: '750px',
-      desktop: '1380px',
+      tablet: '550px',
     },
   },
   plugins: [],
