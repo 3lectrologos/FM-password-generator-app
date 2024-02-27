@@ -25,32 +25,3 @@
   @apply text-[18px] leading-[120%];
   @apply tablet:text-[24px] tablet:leading-[31px];
 }
-
-input[type="range"] {
-  appearance: none;
-  -webkit-appearance: none;
-  background: transparent;
-  @apply cursor-pointer;
-}
-
-input[type="range"]::-webkit-slider-runnable-track {
-  @apply h-2 bg-deepSpace;
-}
-
-input[type="range"]::-moz-range-track {
-  @apply bg-deepSpace;
-  @apply h-2;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  @apply w-[28px] h-[28px] rounded-full bg-lavenderGray;
-  @apply -mt-[10px];
-}
-
-input[type="range"]::-moz-range-thumb {
-  border:none;
-  border-radius: 0;
-  @apply w-[28px] h-[28px] rounded-full bg-lavenderGray;
-}

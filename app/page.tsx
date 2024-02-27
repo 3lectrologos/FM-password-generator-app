@@ -9,6 +9,7 @@ import Button from '@/app/Button'
 import { usePassword } from '@/app/password'
 import Container from '@/app/Container'
 import LengthSlider from '@/app/LengthSlider'
+import Checkboxes from '@/app/Checkboxes'
 
 export default function Home() {
   const { password, passwordStrength, generate, generating } = usePassword()
@@ -20,7 +21,8 @@ export default function Home() {
       />
       <PasswordBox className={`mb-4 tablet:mb-6`} password={password} />
       <OptionsBox>
-        <LengthSlider className={`mb-4 tablet:mb-6`} />
+        <LengthSlider className={`mb-[42px]`} />
+        <Checkboxes className={`mb-8`} />
         <StrengthMeter
           className={`mb-4 tablet:mb-8`}
           value={passwordStrength}
