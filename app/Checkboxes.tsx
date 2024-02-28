@@ -4,6 +4,8 @@ import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 
 import { twMerge } from 'tailwind-merge'
+import { forwardRef, useImperativeHandle } from 'react'
+import { CharacterCategories } from '@/app/types'
 
 const labels = [
   'Include Uppercase Letters',
@@ -12,28 +14,97 @@ const labels = [
   'Include Symbols',
 ]
 
-export default function Checkboxes({ className = '' }: { className?: string }) {
+export type CheckboxesRef = {
+  getSelectedCategories: () => CharacterCategories[]
+}
+
+const Checkboxes = forwardRef<
+  CheckboxesRef,
+  { onCheckedChange: () => void; className?: string }
+>(({ onCheckedChange, className = '' }, ref) => {
+  const uppercaseRef =
+    React.useRef<React.ElementRef<typeof CheckboxPrimitive.Root>>(null)
+  const lowercaseRef =
+    React.useRef<React.ElementRef<typeof CheckboxPrimitive.Root>>(null)
+  const numbersRef =
+    React.useRef<React.ElementRef<typeof CheckboxPrimitive.Root>>(null)
+  const symbolsRef =
+    React.useRef<React.ElementRef<typeof CheckboxPrimitive.Root>>(null)
+
+  useImperativeHandle(ref, () => ({
+    getSelectedCategories: () => {
+      const selectedCategories: CharacterCategories[] = []
+      if (uppercaseRef.current?.dataset.state! === 'checked') {
+        selectedCategories.push('uppercase')
+      }
+      if (lowercaseRef.current?.dataset.state! === 'checked') {
+        selectedCategories.push('lowercase')
+      }
+      if (numbersRef.current?.dataset.state! === 'checked') {
+        selectedCategories.push('numbers')
+      }
+      if (symbolsRef.current?.dataset.state! === 'checked') {
+        selectedCategories.push('symbols')
+      }
+      return selectedCategories
+    },
+  }))
+
   return (
     <div className={twMerge(`flex flex-col gap-y-4 tablet:gap-y-5`, className)}>
-      {labels.map((label) => (
-        <CheckboxWithLabel key={label} label={label} />
-      ))}
+      <CheckboxWithLabel
+        label={labels[0]}
+        checkboxRef={uppercaseRef}
+        onCheckedChange={onCheckedChange}
+        defaultChecked={true}
+      />
+      <CheckboxWithLabel
+        label={labels[1]}
+        checkboxRef={lowercaseRef}
+        onCheckedChange={onCheckedChange}
+        defaultChecked={true}
+      />
+      <CheckboxWithLabel
+        label={labels[2]}
+        checkboxRef={numbersRef}
+        onCheckedChange={onCheckedChange}
+        defaultChecked={true}
+      />
+      <CheckboxWithLabel
+        label={labels[3]}
+        checkboxRef={symbolsRef}
+        onCheckedChange={onCheckedChange}
+        defaultChecked={false}
+      />
     </div>
   )
-}
+})
+Checkboxes.displayName = 'Checkboxes'
 
 function CheckboxWithLabel({
   label,
   className = '',
+  checkboxRef,
+  onCheckedChange,
+  defaultChecked,
 }: {
   label: string
   className?: string
+  checkboxRef?: React.RefObject<React.ElementRef<typeof CheckboxPrimitive.Root>>
+  onCheckedChange?: () => void
+  defaultChecked?: boolean
 }) {
   return (
     <div
       className={twMerge(`flex items-center gap-x-5 tablet:gap-x-6`, className)}
     >
-      <Checkbox id={label} name={label} />
+      <Checkbox
+        id={label}
+        name={label}
+        ref={checkboxRef}
+        onCheckedChange={onCheckedChange}
+        defaultChecked={defaultChecked}
+      />
       <label
         className={`textStyle-body leading-none text-lavenderGray`}
         htmlFor={label}
@@ -71,3 +142,5 @@ const Checkbox = React.forwardRef<
   </CheckboxPrimitive.Root>
 ))
 Checkbox.displayName = CheckboxPrimitive.Root.displayName
+
+export { Checkboxes }

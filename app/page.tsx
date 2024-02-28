@@ -8,11 +8,32 @@ import StrengthMeter from '@/app/StrengthMeter'
 import Button from '@/app/Button'
 import { usePassword } from '@/app/password'
 import Container from '@/app/Container'
-import LengthSlider from '@/app/LengthSlider'
-import Checkboxes from '@/app/Checkboxes'
+import { LengthSlider, LengthSliderRef } from '@/app/LengthSlider'
+import { Checkboxes, CheckboxesRef } from '@/app/Checkboxes'
+import { useRef, useState } from 'react'
 
 export default function Home() {
   const { password, passwordStrength, generate, generating } = usePassword()
+  const sliderRef = useRef<LengthSliderRef>(null)
+  const optionsRef = useRef<CheckboxesRef>(null)
+  const [noCategoriesSelected, setNoCategoriesSelected] = useState(false)
+
+  function onClick() {
+    const length = sliderRef.current?.getValue()
+    const selectedCategories = optionsRef.current?.getSelectedCategories()
+    if (length && selectedCategories) {
+      return generate({ length, selectedCategories })
+    }
+  }
+
+  function onCheckboxesChange() {
+    const selectedCategories = optionsRef.current?.getSelectedCategories()
+    if (selectedCategories?.length === 0) {
+      setNoCategoriesSelected(true)
+    } else {
+      setNoCategoriesSelected(false)
+    }
+  }
 
   return (
     <Container className={`relative`}>
@@ -21,16 +42,20 @@ export default function Home() {
       />
       <PasswordBox className={`mb-4 tablet:mb-6`} password={password} />
       <OptionsBox>
-        <LengthSlider className={`mb-[42px]`} />
-        <Checkboxes className={`mb-8`} />
+        <LengthSlider className={`mb-[42px]`} ref={sliderRef} />
+        <Checkboxes
+          className={`mb-8`}
+          ref={optionsRef}
+          onCheckedChange={onCheckboxesChange}
+        />
         <StrengthMeter
           className={`mb-4 tablet:mb-8`}
           value={passwordStrength}
         />
         <Button
           className={twMerge(`w-full h-[56px] tablet:h-[65px] shrink-0`)}
-          onClick={generate}
-          disabled={generating}
+          onClick={onClick}
+          disabled={generating || noCategoriesSelected}
         />
       </OptionsBox>
     </Container>

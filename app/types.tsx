@@ -14,3 +14,20 @@ export const passwordStrengthBgColors = {
   3: 'bg-mustardYellow',
   4: 'bg-mintGreen',
 } as const
+
+export const characterCategories = [
+  'uppercase',
+  'lowercase',
+  'numbers',
+  'symbols',
+] as const
+
+export type CharacterCategories = (typeof characterCategories)[number]
+
+export const categoryToCharlistMap: Map<CharacterCategories, string[]> =
+  new Map([
+    ['uppercase', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')],
+    ['lowercase', 'abcdefghijklmnopqrstuvwxyz'.split('')],
+    ['numbers', '0123456789'.split('')],
+    ['symbols', '!@#$%^&*()_+{}:"<>?'.split('')],
+  ])

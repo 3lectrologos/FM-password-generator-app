@@ -1,13 +1,28 @@
 'use client'
 
 import { twMerge } from 'tailwind-merge'
-import { useState } from 'react'
+import { Ref, useImperativeHandle, useState } from 'react'
 
 import * as React from 'react'
 import * as SliderPrimitive from '@radix-ui/react-slider'
 
-export default function LengthSlider({ className }: { className?: string }) {
+export type LengthSliderRef = {
+  getValue: () => number
+}
+
+const LengthSlider = React.forwardRef<
+  LengthSliderRef,
+  React.ComponentPropsWithoutRef<'div'>
+>(({ className }, ref) => {
   const [length, setLength] = useState(10)
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      getValue: () => length,
+    }),
+    [length]
+  )
 
   return (
     <div
@@ -25,14 +40,15 @@ export default function LengthSlider({ className }: { className?: string }) {
       <Slider
         className={`w-full cursor-pointer`}
         name={'Password Length'}
-        min={5}
-        max={15}
+        min={3}
+        max={14}
         value={[length]}
         onValueChange={(value) => setLength(value[0])}
       />
     </div>
   )
-}
+})
+LengthSlider.displayName = 'LengthSlider'
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -56,4 +72,4 @@ const Slider = React.forwardRef<
 })
 Slider.displayName = SliderPrimitive.Root.displayName
 
-export { Slider }
+export { LengthSlider }
