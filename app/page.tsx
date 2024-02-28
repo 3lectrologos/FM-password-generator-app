@@ -11,6 +11,7 @@ import Container from '@/app/Container'
 import { LengthSlider, LengthSliderRef } from '@/app/LengthSlider'
 import { Checkboxes, CheckboxesRef } from '@/app/Checkboxes'
 import { useRef, useState } from 'react'
+import Tooltip from '@/app/Tooltip'
 
 export default function Home() {
   const { password, passwordStrength, generate, generating } = usePassword()
@@ -35,6 +36,14 @@ export default function Home() {
     }
   }
 
+  const button = (
+    <Button
+      className={twMerge(`w-full h-[56px] tablet:h-[65px] shrink-0`)}
+      onClick={onClick}
+      disabled={generating || noCategoriesSelected}
+    />
+  )
+
   return (
     <Container className={`relative`}>
       <Title
@@ -52,11 +61,16 @@ export default function Home() {
           className={`mb-4 tablet:mb-8`}
           value={passwordStrength}
         />
-        <Button
-          className={twMerge(`w-full h-[56px] tablet:h-[65px] shrink-0`)}
-          onClick={onClick}
-          disabled={generating || noCategoriesSelected}
-        />
+        {noCategoriesSelected ? (
+          <Tooltip
+            className={`cursor-not-allowed`}
+            text={`Select one or more character classes.`}
+          >
+            {button}
+          </Tooltip>
+        ) : (
+          button
+        )}
       </OptionsBox>
     </Container>
   )

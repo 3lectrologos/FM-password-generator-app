@@ -29,11 +29,15 @@ function computeStrength(password: string): PasswordStrength {
   if (password.length <= 4) {
     return 1
   } else if (password.length <= 6) {
-    return Math.min(3, numCategories) as PasswordStrength
+    return Math.min(2, numCategories) as PasswordStrength
   } else if (password.length <= 8) {
-    return (1 + Math.min(3, numCategories)) as PasswordStrength
+    return (1 +
+      Math.round(Math.min(2, (numCategories * 2) / 3))) as PasswordStrength
   } else if (password.length <= 10) {
-    return Math.min(4, 2 + Math.min(4, numCategories)) as PasswordStrength
+    return Math.min(
+      4,
+      2 + Math.round(Math.min(3, (numCategories * 2) / 3))
+    ) as PasswordStrength
   } else {
     return 4
   }
