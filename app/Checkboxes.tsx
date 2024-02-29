@@ -53,24 +53,28 @@ const Checkboxes = forwardRef<
   return (
     <div className={twMerge(`flex flex-col gap-y-4 tablet:gap-y-5`, className)}>
       <CheckboxWithLabel
+        id={'uppercase'}
         label={labels[0]}
         checkboxRef={uppercaseRef}
         onCheckedChange={onCheckedChange}
         defaultChecked={true}
       />
       <CheckboxWithLabel
+        id={'lowercase'}
         label={labels[1]}
         checkboxRef={lowercaseRef}
         onCheckedChange={onCheckedChange}
         defaultChecked={true}
       />
       <CheckboxWithLabel
+        id={'numbers'}
         label={labels[2]}
         checkboxRef={numbersRef}
         onCheckedChange={onCheckedChange}
         defaultChecked={true}
       />
       <CheckboxWithLabel
+        id={'symbols'}
         label={labels[3]}
         checkboxRef={symbolsRef}
         onCheckedChange={onCheckedChange}
@@ -82,12 +86,14 @@ const Checkboxes = forwardRef<
 Checkboxes.displayName = 'Checkboxes'
 
 function CheckboxWithLabel({
+  id,
   label,
   className = '',
   checkboxRef,
   onCheckedChange,
   defaultChecked,
 }: {
+  id: string
   label: string
   className?: string
   checkboxRef?: React.RefObject<React.ElementRef<typeof CheckboxPrimitive.Root>>
@@ -99,14 +105,16 @@ function CheckboxWithLabel({
       className={twMerge(`flex items-center gap-x-5 tablet:gap-x-6`, className)}
     >
       <Checkbox
-        id={label}
+        id={id}
         name={label}
+        aria-labelledby={`${id}-label`}
         ref={checkboxRef}
         onCheckedChange={onCheckedChange}
         defaultChecked={defaultChecked}
       />
       <label
         className={`textStyle-body leading-none text-lavenderGray`}
+        id={`${id}-label`}
         htmlFor={label}
       >
         {label}
