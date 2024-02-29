@@ -70,7 +70,10 @@ const Slider = React.forwardRef<
       <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden bg-deepSpace">
         <SliderPrimitive.Range className="absolute h-full bg-mintGreen" />
       </SliderPrimitive.Track>
-      <SliderPrimitive.Thumb className="block h-[28px] w-[28px] rounded-full border-2 bg-lavenderGray transition-colors focus-visible:outline-none focus-visible:border-mintGreen focus-visible:bg-deepSpace focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal focus-visible:ring-mintGreen/35 group-hover:bg-deepSpace group-hover:border-2 group-hover:border-mintGreen disabled:pointer-events-none disabled:opacity-50" />
+      <SliderPrimitive.Thumb
+        aria-labelledby={props['aria-labelledby']}
+        className="block h-[28px] w-[28px] rounded-full border-2 bg-lavenderGray transition-colors focus-visible:outline-none focus-visible:border-mintGreen focus-visible:bg-deepSpace focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal focus-visible:ring-mintGreen/35 group-hover:bg-deepSpace group-hover:border-2 group-hover:border-mintGreen disabled:pointer-events-none disabled:opacity-50"
+      />
     </SliderPrimitive.Root>
   )
 })
