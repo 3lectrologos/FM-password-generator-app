@@ -32,7 +32,10 @@ const LengthSlider = React.forwardRef<
       )}
     >
       <div className={`flex flex-row justify-between items-center`}>
-        <label className={twMerge(`textStyle-body text-lavenderGray`)}>
+        <label
+          className={twMerge(`textStyle-body text-lavenderGray`)}
+          id={`length-slider-label`}
+        >
           Character Length
         </label>
         <span className={`textStyle-heading-lg text-mintGreen`}>{length}</span>
@@ -44,6 +47,7 @@ const LengthSlider = React.forwardRef<
         max={14}
         value={[length]}
         onValueChange={(value) => setLength(value[0])}
+        aria-labelledby={`length-slider-label`}
       />
     </div>
   )
