@@ -115,7 +115,7 @@ function CheckboxWithLabel({
       <label
         className={`textStyle-body leading-none text-lavenderGray`}
         id={`${id}-label`}
-        htmlFor={label}
+        htmlFor={id}
       >
         {label}
       </label>
